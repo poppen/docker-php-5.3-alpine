@@ -7,6 +7,7 @@ RUN apk add -U --no-cache \
   libxml2-dev \
   alpine-sdk \
   mariadb-dev \
+  postgresql-dev \
   zlib-dev \
   libxslt-dev \
   openldap-dev \
@@ -23,15 +24,17 @@ RUN apk add -U --no-cache \
   && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr/include --with-freetype-dir=/usr/include \
   && docker-php-ext-install gd \
   && docker-php-ext-configure ldap --with-libdir=lib/ \
+  && docker-php-ext-install ldap \
   && docker-php-ext-install mysql \
+  && docker-php-ext-install pgsql \
   && docker-php-ext-install ldap \
   && docker-php-ext-install bcmath \
   && docker-php-ext-install soap \
   && docker-php-ext-install xsl \
   && docker-php-ext-install mcrypt \
-  && docker-php-ext-install mbstring pdo pdo_mysql zip \
-  && apk del --purge autoconf alpine-sdk mariadb-dev openldap-dev \
-  && apk add -U mariadb-client-libs libldap \
+  && docker-php-ext-install mbstring pdo pdo_mysql pdo_pgsql zip \
+  && apk del --purge autoconf alpine-sdk mariadb-dev postgresql-dev openldap-dev \
+  && apk add -U mariadb-client-libs postgresql-libs libldap \
   && cd /usr/local/bin \
   && curl -sS https://getcomposer.org/installer | php \
   && mv composer.phar composer \
