@@ -1,4 +1,4 @@
-FROM cespi/php-5.3:fpm-$TAG
+FROM cespi/php-5.3:fpm-latest
 
 
 RUN apk add -U --no-cache \
